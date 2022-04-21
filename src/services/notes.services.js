@@ -1,28 +1,29 @@
 
 const { db } = require('../firebase/firebase.config');
 
-const notesRef = db.collection('notes');
-
 class NotesService {
 
-  async getAllNotes() {
-    const querySnapshot = await notesRef.get();
+  async getAllNotes( uid ) {
+    const querySnapshot = await db.collection(`${ uid }/todo/notes`).get();
     return querySnapshot.docs.map( doc => ({
       id: doc.id,
       ...doc.data()
     }));
   }
 
-  async addNote( note ) {
-    notesRef.add( note );
+  async addNote( note, uid ) {
+    console.log( note, uid)
+    await db.collection(`${ uid }/todo/notes`).add( note );
   }
 
-  async updateNote( id, data ) {
-    await notesRef.doc( id ).update( data );
+  async updateNote( id, data, uid ) {
+    console.log( id, data, uid )
+    await db.doc(`${ uid }/todo/notes/${ id }`).update( data );
   }
 
-  async deletNote( id ) {
-    await notesRef.doc( id ).delete();
+  async deletNote( id, uid ) {
+    console.log( id, uid )
+    await db.doc(`${ uid }/todo/notes/${ id }`).delete();
   }
 
 }
