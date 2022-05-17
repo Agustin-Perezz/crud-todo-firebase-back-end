@@ -13,7 +13,7 @@ app.use( express.json() );
 
 app.get( '/', () => console.log('Working...'));
 
-app.use('/api/notes', require('./routes/notes.router'));
+app.use('/api/notes', require('./src/routes/notes.router'));
 
 app.listen( PORT, () => {
   console.log(`App on port ${ PORT }`);
