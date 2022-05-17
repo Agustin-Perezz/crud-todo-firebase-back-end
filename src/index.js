@@ -12,7 +12,6 @@ app.use( morgan('dev') );
 app.use( express.json() );
 
 app.use('/api/notes', require('./routes/notes.router'));
-// app.use('/api/user', require('./routes/user.router'));
 
 app.listen( PORT, () => {
   console.log(`App on port ${ PORT }`);

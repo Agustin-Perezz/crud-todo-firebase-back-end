@@ -9,21 +9,42 @@ router.post('/', async( req, res ) => {
     const { uid } = req.body;
     const allNotes = await services.getAllNotes( uid );
     res.status(200).json( allNotes );
-   
+  } catch (error) {
+    res.status(400).json({
+      message: error
+    }) 
+  }
+})
+
+router.post('/find/', async( req, res ) => {
+  try {
+    const { uid, id  } = req.body;
+    const note = await services.findNote( id, uid );
+    res.status(200).json( note )
   } catch (error) {
     res.status(404).json({
       message: error
-    }) 
+    })
   }
 })
 
 router.post('/add', async( req, res ) => {
   try {
     const { note, uid } = req.body;
-    await services.addNote( note, uid );
-    res.status(201).json({
-      message: 'created'
+    const newNote = await services.addNote( note, uid );
+    res.status(201).json( newNote );
+  } catch (error) {
+    res.status(400).json({
+      message: error
     })
+  }
+})
+
+router.post('/update/', async( req, res ) => {
+  try {
+    const { uid, data, id } = req.body;
+    const noteUpdate = await services.updateNote( id, data, uid );
+    res.status(201).json( noteUpdate );
   } catch (error) {
     res.status(401).json({
       message: error
@@ -31,25 +52,9 @@ router.post('/add', async( req, res ) => {
   }
 })
 
-router.post('/update/:id', async( req, res ) => {
+router.post('/delet/', async( req, res ) => {
   try {
-    const { uid, data } = req.body;
-    const { id } = req.params;
-    await services.updateNote( id, data, uid );
-    res.status(201).json({
-      message: 'note updated'
-    })
-  } catch (error) {
-    res.status(401).json({
-      message: error
-    })
-  }
-})
-
-router.get('/delet/:id', async( req, res ) => {
-  try {
-    const { id } = req.params;
-    const { uid } = req.body;
+    const { uid, id  } = req.body;
     await services.deletNote( id, uid );
     res.status(201).json({
       message: 'note deleted'

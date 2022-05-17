@@ -12,18 +12,30 @@ class NotesService {
   }
 
   async addNote( note, uid ) {
-    console.log( note, uid)
-    await db.collection(`${ uid }/todo/notes`).add( note );
+    const resp = await db.collection(`${ uid }/todo/notes`).add( note );
+    return {
+      ...note,
+      id: resp.id
+    };
   }
 
   async updateNote( id, data, uid ) {
-    console.log( id, data, uid )
     await db.doc(`${ uid }/todo/notes/${ id }`).update( data );
+    return data;
   }
 
   async deletNote( id, uid ) {
-    console.log( id, uid )
     await db.doc(`${ uid }/todo/notes/${ id }`).delete();
+  }
+
+  async findNote( id, uid ) {
+    const querySnapshot = await db.doc(`${ uid }/todo/notes/${ id }`).get();
+    const data = querySnapshot.data(); 
+    const idNote = querySnapshot.id;
+    return {
+      idNote,
+      ...data
+    };
   }
 
 }
