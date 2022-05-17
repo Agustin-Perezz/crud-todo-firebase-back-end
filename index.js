@@ -3,9 +3,9 @@ const morgan = require("morgan");
 const cors = require('cors');
 
 const app = express();
-const PORT = 3005;
+const PORT = process.env.PORT || 3005;
 
-const whiteList = ['http://localhost:3000', 'http://localhost:3005', 'https://git.heroku.com/intense-spire-90736.git'];
+const whiteList = ['http://localhost:3000', 'http://localhost:3005', 'https://intense-spire-90736.herokuapp.com/'];
 
 app.use( cors({ origin: whiteList }) );
 app.use( morgan('dev') );
