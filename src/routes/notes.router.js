@@ -10,6 +10,7 @@ router.post('/', async( req, res ) => {
     const allNotes = await services.getAllNotes( uid );
     res.status(200).json( allNotes );
   } catch (error) {
+    console.log( error )
     res.json( JSON.stringify( error )) 
   }
 })

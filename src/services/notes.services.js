@@ -5,6 +5,7 @@ class NotesService {
 
   async getAllNotes( uid ) {
     const querySnapshot = await db.collection(`${ uid }/todo/notes`).get();
+    console.log( querySnapshot )
     return querySnapshot.docs.map( doc => ({
       id: doc.id,
       ...doc.data()
