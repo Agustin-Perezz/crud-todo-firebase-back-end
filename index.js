@@ -11,7 +11,7 @@ app.use( cors({ origin: whiteList }) );
 app.use( morgan('dev') );
 app.use( express.json() );
 
-app.get( '/', () => console.log('Working...'));
+app.get( '/', (req,res) => res.send('Hello from heroku.'));
 
 app.use('/api/notes', require('./src/routes/notes.router'));
 
