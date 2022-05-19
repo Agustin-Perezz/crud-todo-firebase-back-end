@@ -2,6 +2,8 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require('cors');
 
+const notesRouter = require('./src/routes/notes.router');
+
 const app = express();
 const PORT = process.env.PORT || 3005;
 
@@ -13,7 +15,7 @@ app.use( express.json() );
 
 app.get( '/', (req,res) => res.send('Hello from heroku.'));
 
-app.use('/api/notes', require('./src/routes/notes.router'));
+app.use('/api/notes', notesRouter );
 
 app.listen( PORT, () => {
   console.log(`App on port ${ PORT }`);
